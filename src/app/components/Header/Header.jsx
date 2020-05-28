@@ -1,18 +1,19 @@
 import React from "react";
 
-import MaterialIcon from "material-icons-react";
+import {IconContext} from "react-icons";
+import {MdMenu, MdClear} from "react-icons/md"
 
 import {Row} from "../styled-comp";
 import {Ul, Li} from "./styles";
 
 export default function Header(){
 	const [nav, showNav] = React.useState(false);
-	return (<>
+	return (<IconContext.Provider value={{size:"2em",className:"news-app-icons"}}>
 		<Row style={{height:"50px", lineHeight:"50px"}}>
 			<form></form>
 			<div onClick={()=>showNav(n=>!n)}>
-				{nav && <MaterialIcon icon="clear" size="large"/>}
-				{!nav && <MaterialIcon icon="menu" size="large"/>}
+				{!nav && <MdMenu/>}
+				{nav && <MdClear/>}
 			</div>
 		</Row>
 		<Ul show={nav}>
@@ -20,5 +21,5 @@ export default function Header(){
 			<Li>About</Li>
 			<Li>Contact Us</Li>
 		</Ul>
-	</>)
+	</IconContext.Provider>)
 }

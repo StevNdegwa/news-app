@@ -1,0 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div#root{
+  display: grid;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  grid-template-columns: 10% 10% 10% 10% 5% 5% 5% 5% 10% 10% 10% 10%;
+}
+
+.news-app-icons{
+  cursor: pointer;
+}
