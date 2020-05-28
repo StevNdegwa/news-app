@@ -1,25 +1,40 @@
 import React from "react";
 
-import {IconContext} from "react-icons";
-import {MdMenu, MdClear} from "react-icons/md"
+import {Link} from "react-router-dom";
+import {MdMenu, MdClear, MdSearch} from "react-icons/md"
 
-import {Row} from "../styled-comp";
-import {Ul, Li} from "./styles";
+import {Ul, Li, Nav, HControl,Search,SearchInput} from "./styles";
+
+const {countries} = require("../../data/countries.json")
 
 export default function Header(){
-	const [nav, showNav] = React.useState(false);
-	return (<IconContext.Provider value={{size:"2em",className:"news-app-icons"}}>
-		<Row style={{height:"50px", lineHeight:"50px"}}>
-			<form></form>
-			<div onClick={()=>showNav(n=>!n)}>
-				{!nav && <MdMenu/>}
-				{nav && <MdClear/>}
-			</div>
-		</Row>
-		<Ul show={nav}>
-			<Li>Home</Li>
-			<Li>About</Li>
-			<Li>Contact Us</Li>
-		</Ul>
-	</IconContext.Provider>)
+  const [nav, showNav] = React.useState(false);
+  
+  function submitSearch(evt){
+    evt.preventDefault();
+  }
+  
+  return (<>
+    <Nav>
+      <HControl>
+        <form method="POST" onSubmit={submitSearch}>
+          <SearchInput placeholder="Search a Topic"/>
+          <Search><MdSearch size="2em"/></Search>
+        </form>
+      </HControl>
+      <HControl>
+        <select>
+          {countries.map((c)=>{
+            return (<option key={c.key} value={c.keys}>{c.name}</option>)
+          })}
+        </select>
+      </HControl>
+      <HControl onClick={()=>showNav(n=>!n)}>{nav ? <MdClear size="2em"/> :<MdMenu size="2em"/>}</HControl>
+    </Nav>
+    <Ul show={nav}>
+      <Li><Link to="/">Home</Link></Li>
+      <Li><Link to="/about">About</Link></Li>
+      <Li><Link to="/contact-us">Contact Us</Link></Li>
+    </Ul>
+  </>)
 }

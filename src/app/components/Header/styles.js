@@ -1,12 +1,49 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+import {Row, Control} from "../styled-comp";
+
+export const Search = styled.button`
+background-color:transparent;
+border:none;
+`;
+const inputanim=keyframes`
+from{
+  width;200px;
+}
+to{
+  width:600px;
+}
+`;
+export const SearchInput = styled.input`
+border:none;
+outset:none;
+border-bottom: 2px solid #212121;
+font-size:1.3em;
+padding:0.25em;
+width:200px;
+transition:width 1s;
+&:focus{
+  width:600px;
+}
+`;
+
+export const Nav = styled(Row)`
+height:50px;
+line-height:50px;
+`;
+
+export const HControl=styled(Control)`
+height:50px;
+`;
 
 export const Ul = styled.ul`
 grid-column: 1 /span 12;
 list-style-type: none;
 width: 100%;
 z-ndex: 1000;
-background-color: rgba(255,255,255,0.6);
-position:reative;
+background-color: rgba(255,255,255,0.8);
+margin-top:50px;
+position:absolute;
 display:${(props)=>(props.show ? "block" : "none")};
 transition:display 2s ease-in;
 `
@@ -16,4 +53,11 @@ font-weight:bold;
 text-align:center;
 width:100%;
 margin:0.5em 0;
+&>a{
+  text-decoration:none;
+  color:#212121;
+  &:hover{
+    color:#00c853;
+  }
+}
 `
