@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components";
+import styled from "styled-components";
 
 import {Row, Control} from "../styled-comp";
 
@@ -6,14 +6,7 @@ export const Search = styled.button`
 background-color:transparent;
 border:none;
 `;
-const inputanim=keyframes`
-from{
-  width;200px;
-}
-to{
-  width:600px;
-}
-`;
+
 export const SearchInput = styled.input`
 border:none;
 outset:none;
@@ -40,7 +33,7 @@ export const Ul = styled.ul`
 grid-column: 1 /span 12;
 list-style-type: none;
 width: 100%;
-z-ndex: 1000;
+z-index: 1000;
 background-color: rgba(255,255,255,0.8);
 margin-top:50px;
 position:absolute;

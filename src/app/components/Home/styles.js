@@ -8,6 +8,7 @@ background-color:#424242;
 `;
 
 export const Topic = styled(Control)`
+grid-column:1 /span 12;
 height:60px;
 line-height:60px;
 min-width:60px;
@@ -24,6 +25,9 @@ cursor:pointer;
 
 export const Content = styled.div`
 position:relative;
+display:grid;
+grid-column:1 /span 12;
+grid-template-columns:10% 10% 10% 10% 5% 5% 5% 5% 10% 10% 10% 10%;
 `;
 
 export const SelectTopic = styled.ul`
@@ -34,6 +38,7 @@ border-radius:0 0 5px 5px;
 margin:0 5px;
 position:absolute;
 z-index:500;
+background-color:white;
 `;
 
 export const TopicOption = styled.li`

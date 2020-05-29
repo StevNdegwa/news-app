@@ -1,24 +1,28 @@
 import React from "react";
-
 import {MdAdd} from "react-icons/md";
 
 import Header from "../Header";
+import Footer from "../Footer";
+import NewsList from "./NewsList";
+
 import {Topics, Topic, SelectTopic, TopicOption,Content} from "./styles";
 
 const {list} = require("../../data/topics.json");
 
 export default function Home(){
   const [topics, changeTopics] = React.useReducer(topicsReducer, [])
-  const [showList, setShowList] = React.useState(false)
+  const [showList, setShowList] = React.useState(false);
+  const [currTopic, setCurrTopic] = React.useState("Top News");
+  
   return (<>
     <Header/>
     <Topics>
       <div style={{display:"flex"}}>
         <Topic onClick={()=>setShowList(l=>!l)}><MdAdd size="1.5em"/></Topic>
-        <Topic>Top News</Topic>
+        <Topic onClick={()=>setCurrTopic("Top News")}>Top News</Topic>
         {topics.map((t,idx)=>{
-          return (<Topic key={idx} onDoubleClick={()=>changeTopics({type:"remove", topic:t})} title="Double click to remove">
-            {t}
+          return (<Topic key={idx} onDoubleClick={()=>changeTopics({type:"remove", topic:t.key})} title="Double click to remove" onClick={()=>setCurrTopic(t.key)}>
+            {t.label}
           </Topic>);
         })}
       </div>
@@ -26,13 +30,15 @@ export default function Home(){
     <Content>
       {showList && <SelectTopic>
         {list.map((l)=>{
-          return (<TopicOption key={l.key} onClick={()=>{changeTopics({type:"add", topic:l.label}); setShowList(l=>!l)}}>
+          return (<TopicOption key={l.key} onClick={()=>{changeTopics({type:"add", topic:l}); setShowList(l=>!l)}}>
             {l.label}
           </TopicOption>)
         })}
         </SelectTopic>
       }
+      <NewsList topic={currTopic}/>
     </Content>
+    <Footer/>
   </>);
 }
 
@@ -44,10 +50,8 @@ function topicsReducer(state, action){
       }else{
         return state;
       }
-      break;
     case "remove":
-      return state.filter((t)=>(t !== action.topic));
-      break;
+      return state.filter((t)=>(t.key !== action.topic));
     default:
       return state;
   }
