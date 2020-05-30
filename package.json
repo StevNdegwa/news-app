@@ -8,7 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "cross-fetch": "^3.0.4",
     "domino": "^2.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "regenerator-runtime": "^0.13.5"
   },
   "scripts": {
     "start": "react-scripts start",

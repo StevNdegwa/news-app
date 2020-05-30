@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import {Loader} from "../../styled-comp";
+
 export const Ul = styled.ul`
 list-style-type:none;
 `;
@@ -30,4 +32,8 @@ padding:0.5em;
 export const PSearches = styled(Ul)`
 grid-column:10 /span 3;
 border:1px solid black;
+`;
+
+export const NewsLoader = styled(Loader)`
+grid-column-start:4
 `;
