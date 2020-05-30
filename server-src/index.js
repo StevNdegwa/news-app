@@ -9,7 +9,7 @@ const app=express();
 app.use(logger("combined"));
 
 app.get("/news/articles/:category", getNewsHandler)
-app.get("/", mainHandler);
+app.get("/:page", mainHandler);
 
 app.use(express.static("build"));
 
