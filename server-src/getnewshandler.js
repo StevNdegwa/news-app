@@ -11,6 +11,10 @@ export default async function getNewsHandler(request, response, next){
           const {to} = request.query;
           news = await fetchTopics(to);
           break;
+        case "search":
+          const {query} = request.query;
+          news = await fetchSearchNews(query);
+          break;
         default:
           news = await fetchTopNews();
       }
@@ -35,6 +39,16 @@ function fetchTopics(topic){
 
 function fetchTopNews(){
   return fetch(`https://gnews.io/api/v3/top-news?token=e44696b883dc0684501c463c4bf8c5a9`, {method:"GET"})
+  .then((response)=>{
+    
+    return response.json();
+    
+  })
+}
+
+
+function fetchSearchNews(query){
+  return fetch(`https://gnews.io/api/v3/search?q=${query}&token=e44696b883dc0684501c463c4bf8c5a9`, {method:"GET"})
   .then((response)=>{
     
     return response.json();

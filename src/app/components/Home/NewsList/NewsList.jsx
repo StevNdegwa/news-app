@@ -1,26 +1,32 @@
 import React from "react";
 import fetch from "cross-fetch";
-import {List, Item, PSearches, NewsLoader} from "./styles";
-//const {articles} = require("../../../data/sample-resp.json");
+
+import {MdChevronRight} from "react-icons/md";
+
+import {List, Item, PSearches, Search, NewsLoader} from "./styles";
+const {searches} = require("../../../data/popular-searches.json");
 
 class NewsList extends React.Component{
   constructor(props){
     super(props);
-    this.updateArticles = this.updateArticles.bind(this)
-    this.state = {articles:{}, loading:false}
+    this.updateArticles = this.updateArticles.bind(this);
+    this.handlePopularSearchClick = this.handlePopularSearchClick.bind(this);
+    this.state = {articles:{}, loading:false, topic:"", query:""}
   }
   
   async componentDidMount(){
     await this.updateArticles(this.props.topic);
   }
   
-  async updateArticles(topic){
-    if(!this.state.articles[topic] || !this.state.articles[topic].length === 0){ //only fetch once
+  async updateArticles(topic, query){
+    const {articles} = this.state;
+    this.setState({topic, query});
+    if((!articles[topic] || articles[topic].length === 0) || !!query){
       this.setState({loading:true})
       try{
-        const article = await getNewsArticles(topic);
+        const article = await getNewsArticles(topic, query);
         this.setState((state, props)=>{
-          return {articles:{...state.articles, [props.topic]:article}, loading:false}
+          return {articles:{...state.articles, [topic]:article}, loading:false}
         });
       }catch(error){
         console.log(error)
@@ -29,11 +35,15 @@ class NewsList extends React.Component{
     }
   }
   
+  handlePopularSearchClick(q){
+    return this.updateArticles("search", q);
+  }
+  
   render(){
-    const {articles, loading} = this.state;
-    const {topic} = this.props;
+    const {articles, loading, topic, query} = this.state;
     return (<>
       <List>
+      {(topic === "search") && <><Item><h2><MdChevronRight size="1.5em"/>Search Results: {query}</h2></Item><Item><p></p></Item></>}
       {loading && <Item><NewsLoader size="50px"/></Item>}
       {articles[topic] && articles[topic].map((article)=>{
         return (<Item>
@@ -45,20 +55,30 @@ class NewsList extends React.Component{
       })}
     </List>
     <PSearches>
-    
+      <Search><h4>Popular Searches</h4></Search>
+      {searches.map((search, idx)=>{
+        return (<Search key={idx} onClick={()=>this.handlePopularSearchClick(search)}>{search}</Search>)
+      })}
     </PSearches>
   </>)
   }
 }
 
-async function getNewsArticles(topic){
+async function getNewsArticles(topic, query){
   try{
     var url;
-    if(!topic || topic === "topnews"){
-      url = "http://localhost:7000/news/articles/topnews";
-    }else{
-      url = "http://localhost:7000/news/articles/topics?to="+topic;
+    switch(topic){
+      case "topnews":
+        url = "http://localhost:7000/news/articles/topnews";
+        break;
+      case "search":
+        query = encodeURI(query);
+        url = `http://localhost:7000/news/articles/search?query=${query}`;
+        break;
+      default:
+        url = `http://localhost:7000/news/articles/topics?to=${topic}`;
     }
+    
     const body = await fetch(url, {
       method:"GET",
       headers:{

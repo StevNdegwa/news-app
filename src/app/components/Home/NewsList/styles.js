@@ -12,7 +12,6 @@ width:100%;
 
 export const List = styled(Ul)`
 grid-column:1 /span 9;
-border:1px solid black;
 `;
 
 export const Item = styled(Li)`
@@ -31,7 +30,17 @@ padding:0.5em;
 
 export const PSearches = styled(Ul)`
 grid-column:10 /span 3;
-border:1px solid black;
+padding:2em;
+`;
+
+export const Search = styled(Li)`
+font-size:1.5em;
+cursor:pointer;
+color:#0277bd;
+&>h4{
+  text-decoration:underline;
+  color:#212121;
+}
 `;
 
 export const NewsLoader = styled(Loader)`
