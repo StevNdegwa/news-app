@@ -35,6 +35,13 @@ class NewsList extends React.Component{
     }
   }
   
+  componentWillUnmount(){
+    delete this.state.articles;
+    delete this.state.query;
+    delete this.state.topic;
+    delete this.state.loading;
+  }
+  
   handlePopularSearchClick(q){
     return this.updateArticles("search", q);
   }
