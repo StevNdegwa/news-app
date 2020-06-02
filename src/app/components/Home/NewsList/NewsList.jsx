@@ -1,8 +1,8 @@
 import React from "react";
 import fetch from "cross-fetch";
 
-import {MdChevronRight} from "react-icons/md";
-
+import {MdChevronRight,MdCancel} from "react-icons/md";
+import {Control} from "../../styled-comp";
 import {List, Item, PSearches, Search, NewsLoader} from "./styles";
 const {searches} = require("../../../data/popular-searches.json");
 
@@ -11,7 +11,7 @@ class NewsList extends React.Component{
     super(props);
     this.updateArticles = this.updateArticles.bind(this);
     this.handlePopularSearchClick = this.handlePopularSearchClick.bind(this);
-    this.state = {articles:{}, loading:false, topic:"", query:""}
+    this.state = {articles:{}, loading:false, topic:"", query:"", netError:false}
   }
   
   async componentDidMount(){
@@ -22,11 +22,11 @@ class NewsList extends React.Component{
     const {articles} = this.state;
     this.setState({topic, query});
     if((!articles[topic] || articles[topic].length === 0) || !!query){
-      this.setState({loading:true})
+      this.setState({loading:true,netError:false})
       try{
         const article = await getNewsArticles(topic, query);
         this.setState((state, props)=>{
-          return {articles:{...state.articles, [topic]:article}, loading:false}
+          return {articles:{...state.articles, [topic]:article}, loading:false, netError:(article.length === 0)}
         });
       }catch(error){
         console.log(error)
@@ -47,11 +47,12 @@ class NewsList extends React.Component{
   }
   
   render(){
-    const {articles, loading, topic, query} = this.state;
+    const {articles, loading, topic, query, netError} = this.state;
     return (<>
       <List>
-      {(topic === "search") && <><Item><h2><MdChevronRight size="1.5em"/>Search Results: {query}</h2></Item><Item><p></p></Item></>}
+      {(topic === "search") && <><Item><h2><MdChevronRight size="1.5em"/>Search Results: {query}</h2></Item><hr/></>}
       {loading && <Item><NewsLoader size="50px"/></Item>}
+      {netError&&<Item><Control><MdCancel size="1.5em"/>Please check your internet connection</Control></Item>}
       {articles[topic] && articles[topic].map((article)=>{
         return (<Item>
           <article>

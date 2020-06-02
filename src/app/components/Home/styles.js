@@ -17,6 +17,7 @@ font-weight:bold;
 color:white;
 text-align:center;
 cursor:pointer;
+background-color:${(props)=>(props.active ? "#00c853" : "transparent")};
 &:hover{
   background-color:#00c853;
   border:1px outset #00c853;
@@ -26,6 +27,7 @@ cursor:pointer;
 export const Content = styled.div`
 position:relative;
 display:grid;
+background-color:#eeeeee;
 grid-column:1 /span 12;
 grid-template-columns:10% 10% 10% 10% 5% 5% 5% 5% 10% 10% 10% 10%;
 `;

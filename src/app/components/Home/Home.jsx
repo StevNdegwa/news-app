@@ -11,7 +11,7 @@ const {list} = require("../../data/topics.json");
 
 export default function Home(){
   const [topics, changeTopics] = React.useReducer(topicsReducer, [])
-  const [showList, setShowList] = React.useState(false);
+  const [showTopicsList, setShowTopicsList] = React.useState(false);
   const [currTopic, setCurrTopic] = React.useState("topnews");
   const newslist = React.useRef();
   
@@ -24,19 +24,19 @@ export default function Home(){
     <Header/>
     <Topics>
       <div style={{display:"flex"}}>
-        <Topic onClick={()=>setShowList(l=>!l)}><MdAdd size="1.5em"/></Topic>
-        <Topic onClick={()=>setCurrTopic("topnews")}>Top News</Topic>
+        <Topic onClick={()=>setShowTopicsList(l=>!l)}><MdAdd size="1.5em"/></Topic>
+        <Topic onClick={()=>handleTopicClick("topnews")} active={currTopic === "topnews"}>Top News</Topic>
         {topics.map((t,idx)=>{
-          return (<Topic key={idx} onDoubleClick={()=>changeTopics({type:"remove", topic:t.key})} title="Double click to remove" onClick={()=>handleTopicClick(t.key)}>
+          return (<Topic key={idx} onDoubleClick={()=>changeTopics({type:"remove", topic:t.key})} title="Double click to remove" onClick={()=>handleTopicClick(t.key)} active={currTopic === t.key}>
             {t.label}
           </Topic>);
         })}
       </div>
     </Topics>
     <Content>
-      {showList && <SelectTopic>
+      {showTopicsList && <SelectTopic>
         {list.map((l)=>{
-          return (<TopicOption key={l.key} onClick={()=>{changeTopics({type:"add", topic:l}); setShowList(l=>!l)}}>
+          return (<TopicOption key={l.key} onClick={()=>{changeTopics({type:"add", topic:l}); setShowTopicsList(l=>!l)}}>
             {l.label}
           </TopicOption>)
         })}

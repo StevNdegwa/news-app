@@ -15,8 +15,10 @@ font-size:1.3em;
 padding:0.25em;
 width:200px;
 transition:width 1s;
-&:focus{
-  width:600px;
+@media only screen and (min-width: 700px){
+  &:focus{
+    width:600px;
+  }
 }
 `;
 
@@ -38,7 +40,8 @@ background-color: rgba(255,255,255,0.8);
 margin-top:50px;
 position:absolute;
 display:${(props)=>(props.show ? "block" : "none")};
-transition:display 2s ease-in;
+overflow:hidden;
+transition:height 2s;
 `
 export const Li = styled.li`
 font-size:3em;
