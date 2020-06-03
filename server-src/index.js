@@ -10,6 +10,7 @@ app.use(logger("combined"));
 
 app.get("/news/articles/:category", getNewsHandler)
 app.get("/:page", mainHandler);
+app.get("/", mainHandler);
 
 app.use(express.static("build"));
 

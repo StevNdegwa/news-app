@@ -26,7 +26,7 @@ class NewsList extends React.Component{
       try{
         const article = await getNewsArticles(topic, query);
         this.setState((state, props)=>{
-          return {articles:{...state.articles, [topic]:article}, loading:false, netError:(article.length === 0)}
+          return {articles:{...state.articles, [topic]:article}, loading:false, netError: !!article ? (article.length === 0) : true}
         });
       }catch(error){
         console.log(error)
