@@ -10,10 +10,12 @@
     "domino": "^2.1.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "regenerator-runtime": "^0.13.5"
+    "netlify-lambda": "^1.6.3",
+    "regenerator-runtime": "^0.13.5",
+    "serverless-http": "^2.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node ./server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
